@@ -11,16 +11,19 @@ interface LayoutProps {
 
 const Layout: React.FC<LayoutProps> = ({ children }) => {
   const { collapsed, toggleCollapse } = useCollapse()
+  const sideNavWidth = collapsed ? 100 : 280
+
   return (
     <>
       <div className="h-screen">
-        <Header collapsed={collapsed} />
+        <Header widthOffset={sideNavWidth} />
         <SideNav
           collapsed={collapsed}
           toggleCollapse={toggleCollapse}
+          width={sideNavWidth}
         />
-        <MainContent collapsed={collapsed}>{children}</MainContent>
-        <Footer collapsed={collapsed} />
+        <MainContent widthOffset={sideNavWidth}>{children}</MainContent>
+        <Footer widthOffset={sideNavWidth} />
       </div>
     </>
   )

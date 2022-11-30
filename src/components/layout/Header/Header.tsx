@@ -3,16 +3,16 @@ import { AppBar, Toolbar } from '@mui/material'
 import { Button } from '@/components/base'
 
 interface HeaderProps {
-  collapsed: boolean
+  widthOffset: number
 }
 
-const Header: React.FC<HeaderProps> = ({ collapsed }) => {
+const Header: React.FC<HeaderProps> = ({ widthOffset }) => {
   return (
     <>
       <AppBar
         position="static"
-        className="fixed flex flex-col top-0 left-auto right-0 h-20 z-[1101]"
-        style={{ width: `calc(100% - ${collapsed ? 100 : 280}px)` }}
+        className="fixed flex flex-col top-0 left-auto right-0 h-20"
+        style={{ width: `calc(100% - ${widthOffset}px)`, transition: 'width 200ms' }}
       >
         <Toolbar>
           <Button color="inherit">Header</Button>
