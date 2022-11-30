@@ -7,7 +7,7 @@
     "src/**/*.vue",
     "./**/*.ts",
     "./.*.js",
-    "./tailwind.config.js",
-    "./postcss.config.js"
+    "./tailwind.config.cjs",
+    "./postcss.config.cjs"
   ]
 }
