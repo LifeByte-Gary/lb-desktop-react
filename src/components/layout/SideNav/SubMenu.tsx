@@ -3,6 +3,7 @@ import MenuItem, { TMenuItem } from './MuneItem'
 import { Collapse, List } from '@mui/material'
 
 export interface TSubMenu {
+  key: string
   icon: React.ReactElement
   text: string
   items: TMenuItem[]
@@ -15,9 +16,9 @@ interface SubMenuProps {
 }
 
 const SubMenu: React.FC<SubMenuProps> = ({ icon, text, items }) => {
-  const [open, setOpen] = useState(false)
+  const [expanded, setExpanded] = useState(false)
   const subMenuClickHandler: MouseEventHandler = () => {
-    setOpen(!open)
+    setExpanded(!expanded)
   }
 
   return (
@@ -26,10 +27,11 @@ const SubMenu: React.FC<SubMenuProps> = ({ icon, text, items }) => {
         icon={icon}
         text={text}
         expandable
+        expanded={expanded}
         onclick={subMenuClickHandler}
       />
       <Collapse
-        in={open}
+        in={expanded}
         timeout="auto"
         unmountOnExit
       >
@@ -41,6 +43,7 @@ const SubMenu: React.FC<SubMenuProps> = ({ icon, text, items }) => {
             <MenuItem
               key={item.key}
               text={item.text}
+              className="pl-10"
             />
           ))}
         </List>
