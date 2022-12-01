@@ -1,11 +1,13 @@
-import { createTheme } from '@mui/material'
+import { createTheme, Theme } from '@mui/material'
 
-const theme = createTheme({
-  components: {
-    MuiButton: {
-      styleOverrides: {}
+const theme = (theme: Theme): Theme =>
+  createTheme({
+    ...theme,
+    components: {
+      MuiButton: {
+        styleOverrides: {}
+      }
     }
-  }
-})
+  })
 
 export default theme
