@@ -1,28 +1,35 @@
-import React, { MouseEventHandler } from 'react'
-import MenuItem, { IMenuItem } from './MenuItem'
-import { ExpandLess } from '@mui/icons-material'
-import { Collapse, List, ListItemButton, ListItemIcon, ListItemText } from '@mui/material'
+import React, { MouseEventHandler, useState } from 'react'
+import MenuItem, { TMenuItem } from './MuneItem'
+import { Collapse, List } from '@mui/material'
 
-export type ISubMenu = IMenuItem & {
-  subMenu: Array<ISubMenu | IMenuItem>
+export interface TSubMenu {
+  icon: React.ReactElement
+  text: string
+  items: TMenuItem[]
 }
 
 interface SubMenuProps {
-  item: ISubMenu
+  icon: React.ReactElement
+  text: string
+  items: TMenuItem[]
 }
 
-const SubMenu: React.FC<SubMenuProps> = ({ item }) => {
-  const handleClick: MouseEventHandler = () => {}
+const SubMenu: React.FC<SubMenuProps> = ({ icon, text, items }) => {
+  const [open, setOpen] = useState(false)
+  const subMenuClickHandler: MouseEventHandler = () => {
+    setOpen(!open)
+  }
 
   return (
     <>
-      <ListItemButton onClick={handleClick}>
-        <ListItemIcon>{item.icon}</ListItemIcon>
-        <ListItemText primary={item.text} />
-        <ExpandLess />
-      </ListItemButton>
+      <MenuItem
+        icon={icon}
+        text={text}
+        expandable
+        onclick={subMenuClickHandler}
+      />
       <Collapse
-        in={true}
+        in={open}
         timeout="auto"
         unmountOnExit
       >
@@ -30,19 +37,12 @@ const SubMenu: React.FC<SubMenuProps> = ({ item }) => {
           component="div"
           disablePadding
         >
-          {item.subMenu.map((item) => {
-            return 'subMenu' in item ? (
-              <SubMenu
-                key={item.key}
-                item={item}
-              />
-            ) : (
-              <MenuItem
-                key={item.key}
-                item={item}
-              />
-            )
-          })}
+          {items.map((item) => (
+            <MenuItem
+              key={item.key}
+              text={item.text}
+            />
+          ))}
         </List>
       </Collapse>
     </>

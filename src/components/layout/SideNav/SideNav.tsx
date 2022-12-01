@@ -3,52 +3,7 @@ import MenuIcon from '@mui/icons-material/Menu'
 import MenuOpenIcon from '@mui/icons-material/MenuOpen'
 import { IconButton } from '@mui/material'
 import logo from '@/assets/icons/react.svg'
-import { Send as SendIcon } from '@mui/icons-material'
-import Menu, { MenuList } from './Menu'
-
-const menuList: MenuList = [
-  {
-    key: 'dashboard',
-    icon: <SendIcon />,
-    text: 'Dashboard'
-  },
-  {
-    key: 'user',
-    icon: <SendIcon />,
-    text: 'User',
-    subMenu: [
-      {
-        key: 'user-profile',
-        icon: <SendIcon />,
-        text: 'Profile'
-      },
-      {
-        key: 'user-create',
-        icon: <SendIcon />,
-        text: 'Create'
-      }
-    ]
-  },
-  {
-    key: 'hardware',
-    icon: <SendIcon />,
-    text: 'Hardware',
-    subMenu: [
-      {
-        key: 'hardware-1',
-        icon: <SendIcon />,
-        text: 'Level 1',
-        subMenu: [
-          {
-            key: 'hardware-1-1',
-            icon: <SendIcon />,
-            text: 'Level 2'
-          }
-        ]
-      }
-    ]
-  }
-]
+import Menu from './Menu'
 
 interface SideNavProps {
   collapsed: boolean
@@ -58,7 +13,7 @@ interface SideNavProps {
 
 const SideNav: React.FC<SideNavProps> = ({ collapsed, width, toggleCollapse }) => {
   return (
-    <nav
+    <aside
       className="fixed left-0 right-auto overflow-auto bg-gray-200 h-full border-0 border-r border-dotted border-r-grey-500"
       style={{ width, transition: 'width 200ms' }}
     >
@@ -80,8 +35,8 @@ const SideNav: React.FC<SideNavProps> = ({ collapsed, width, toggleCollapse }) =
       </div>
 
       {/* Menu. */}
-      <Menu list={menuList} />
-    </nav>
+      <Menu />
+    </aside>
   )
 }
 
