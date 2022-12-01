@@ -17,7 +17,6 @@ function App(): JSX.Element {
         >
           test
         </Button>
-        <h1 className={'text-red-50'}>AAAAA</h1>
       </Layout>
     </>
   )
