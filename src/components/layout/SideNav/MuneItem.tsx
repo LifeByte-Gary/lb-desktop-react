@@ -1,7 +1,10 @@
-import React, { MouseEventHandler } from 'react'
+import React, { MouseEventHandler, useContext } from 'react'
+import classNames from 'classnames'
 import { ListItemButton, ListItemIcon, ListItemText } from '@mui/material'
 import ExpandLessIcon from '@mui/icons-material/ExpandLess'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
+import TagIcon from '@mui/icons-material/Tag'
+import MenuContext from './MenuContext'
 
 export interface TMenuItem {
   key: string
@@ -10,22 +13,40 @@ export interface TMenuItem {
 }
 
 interface MenuItemProps {
+  index: string
   icon?: React.ReactElement
   text: string
-  onclick?: MouseEventHandler
   expandable?: boolean
   expanded?: boolean
   className?: string
+  onClick?: MouseEventHandler
+  onActive?: () => void
 }
 
-const MenuItem: React.FC<MenuItemProps> = ({ icon, text, onclick, expandable, expanded, className }) => {
+const MenuItem: React.FC<MenuItemProps> = ({ index, icon, text, onClick, onActive, expandable, expanded, className }) => {
+  const isTopLevel = index.split('.').length === 2
+  const { activeIndex } = useContext(MenuContext)
+  const isActive = activeIndex.startsWith(index)
+
+  const clickHandler: MouseEventHandler = (e) => {
+    if (onClick != null) {
+      onClick(e)
+    }
+    if (onActive != null) {
+      onActive()
+    }
+  }
+
   return (
     <ListItemButton
-      className={className}
-      onClick={onclick}
+      color={'primary'}
+      className={classNames('text-primary-main', { 'bg-blue-50': isActive && isTopLevel, 'hover:bg-blue-50': isTopLevel, 'hover:bg-transparent': !isTopLevel }, className)}
+      onClick={clickHandler}
     >
-      <ListItemIcon sx={{ minWidth: icon != null ? '36px' : '18px' }}>{icon != null ? icon : <span>·</span>}</ListItemIcon>
-      <ListItemText primary={text} />
+      <ListItemIcon className={'text-primary-main'}>{icon != null ? icon : <TagIcon />}</ListItemIcon>
+      <ListItemText>
+        <span className={classNames({ 'font-bold': isTopLevel || isActive })}>{text}</span>
+      </ListItemText>
       {expandable === true ? expanded === true ? <ExpandLessIcon /> : <ExpandMoreIcon /> : null}
     </ListItemButton>
   )
